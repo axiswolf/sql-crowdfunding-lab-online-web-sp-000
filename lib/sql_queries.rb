@@ -7,15 +7,25 @@
 # Make sure each ruby method returns a string containing a valid SQL statement.
 
 def selects_the_titles_of_all_projects_and_their_pledge_amounts_alphabetized_by_title
-  "Write your SQL query Here"
+  "SELECT pr.title AS title, SUM(pl.amount) AS amount FROM pledges AS pl
+  LEFT JOIN projects AS pr ON pl.project_id = pr.id
+  GROUP BY pr.id
+  ORDER BY title"
 end
 
 def selects_the_user_name_age_and_pledge_amount_for_all_pledges_alphabetized_by_name
-  "Write your SQL query Here"
+  "SELECT us.name AS user_name, us.age, SUM(pl.amount) AS amount FROM pledges as pl
+  LEFT JOIN users AS us ON pl.user_id = us.id
+  GROUP BY us.id
+  ORDER BY user_name"
 end
 
 def selects_the_titles_and_amount_over_goal_of_all_projects_that_have_met_their_funding_goal
-  "Write your SQL query Here"
+  "SELECT pr.title AS title, (SUM(pl.amount) - pr.funding_goal) AS difference
+  FROM pledges AS pl
+  WHERE difference >= 0
+  LEFT JOIN projects AS pr ON pl.project_id = pr.id
+  GROUP BY pr.id"
 end
 
 def selects_user_names_and_amounts_of_all_pledges_grouped_by_name_then_orders_them_by_the_summed_amount
